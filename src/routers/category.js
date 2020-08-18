@@ -11,5 +11,5 @@ R.put('/:id', categoryController.updateCategoryById)
 
 R.delete('/:id', categoryController.deleteCategoryById)
 
-//test git
+//test git pull
 module.exports = R
