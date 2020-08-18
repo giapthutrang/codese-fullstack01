@@ -11,5 +11,5 @@ R.put('/:id', categoryController.updateCategoryById)
 
 R.delete('/:id', categoryController.deleteCategoryById)
 
-// giờ em chưa pull về mà code ở đây sẽ bị conflict<xung đột ý>
+// vi du bay h la code mới nhất
 module.exports = R
