@@ -11,5 +11,4 @@ R.put('/:id', orderController.updateOrderById)
 
 R.delete('/:id', orderController.deleteOrderById)
 
-
 module.exports = R
