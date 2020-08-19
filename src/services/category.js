@@ -1,6 +1,6 @@
 const db = require('../utils/db')
 
-const getAll = async ({ limit, offset }) => {
+const getAllCategory = async ({ limit, offset }) => {
     const sql = `SELECT display,description,imageUrl,categoryId
      FROM category
      WHERE isDelete = 0
@@ -16,7 +16,7 @@ const getAll = async ({ limit, offset }) => {
         }, data
     }
 }
-const getAllId = async () => {
+const getAllCategoryById = async () => {
     const sql = `SELECT categoryId,display
      FROM category
      WHERE isDelete =0
@@ -30,20 +30,20 @@ const getAllId = async () => {
     }
 }
 
-const getById = async (id) => {
+const getCategoryById = async (id) => {
     const sql = `SELECT  display,description,imageUrl,categoryId
      FROM category WHERE categoryId = ?
      LIMIT 1 ;`;
     const result = await db.queryOne(sql, [id]);
     return result;
 }
-const create = async ({ display, description, imageUrl }) => {
+const createCategory = async ({ display, description, imageUrl }) => {
     const sql = `INSERT INTO category (categoryId,display,description,imageUrl)
     VALUES(uuid(),?,?,?);`;
     await db.query(sql, [display, description, imageUrl])
 }
 
-const updateById = async (id) => {
+const updateCategoryById = async (id) => {
     const sql = `UPDATE category
     SET
         display = ?
@@ -53,7 +53,7 @@ const updateById = async (id) => {
     await db.query(sql, [display, description, imageUrl, id])
 }
 
-const deleteById = async (id) => {
+const deleteCategoryById = async (id) => {
     const sql = `UPDATE category
     SET
        isDelete=1
@@ -61,10 +61,10 @@ const deleteById = async (id) => {
     await db.query(sql, id)
 }
 module.exports = {
-    getAll,
-    getById,
-    create,
-    updateById,
-    deleteById,
-    getAllId
+    getAllCategory,
+    getCategoryById,
+    createCategory,
+    updateCategoryById,
+    deleteCategoryById,
+    getAllCategoryById
 }
