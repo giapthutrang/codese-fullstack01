@@ -1,14 +1,18 @@
 const db = require('../utils/db')
 
 const getAllCategory = async ({ limit, offset }) => {
-    const sql = `SELECT display,description,imageUrl,categoryId
-     FROM category
-     WHERE isDelete = 0
-     LIMIT ?
-     OFFSET ?`
-    const countSql = `SELECT count(categoryId) as total FROM category;`
+    const sql = `
+    SELECT display, description, imageUrl, categoryId
+    FROM category
+    WHERE isDelete = 0
+    LIMIT ?
+    OFFSET ?`
     const data = await db.queryMulti(sql, [limit, offset]);
-    const { total } = await db.queryOne(countSql);
+    const countSql = `
+    SELECT count(categoryId) as total 
+    FROM category;`;
+    const  total  = await db.queryOne(countSql);
+    console.log(total);
     return {
         metadata: {
             length: data.length,
@@ -31,14 +35,15 @@ const getAllCategoryById = async () => {
 }
 
 const getCategoryById = async (id) => {
-    const sql = `SELECT  display,description,imageUrl,categoryId
-     FROM category WHERE categoryId = ?
-     LIMIT 1 ;`;
+    const sql = `
+    SELECT  display, description, imageUrl, categoryId
+    FROM category WHERE categoryId = ?
+    LIMIT 1 ;`;
     const result = await db.queryOne(sql, [id]);
     return result;
 }
 const createCategory = async ({ display, description, imageUrl }) => {
-    const sql = `INSERT INTO category (categoryId,display,description,imageUrl)
+    const sql = `INSERT INTO category (categoryId, display, description, imageUrl)
     VALUES(uuid(),?,?,?);`;
     await db.query(sql, [display, description, imageUrl])
 }

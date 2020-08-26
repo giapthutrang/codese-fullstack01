@@ -1,48 +1,46 @@
 const productService = require('../services/product')
 
-
-const getAll = async (req, res) => {
-    const { data, metadata } = await productService.getAll(req.pagination)
+const getAllproduct = async (req, res) => {
+    const { data, metadata } = await productService.getAllProduct(req.pagination)
     res.send({
         status: 1,
-        metadata, data
+        metadata,
+        data
     })
 }
-const getById = async (req, res) => {
+const getProductbyId = async (req, res) => {
     const { id } = req.params;
-    const data = await productService.getById(id)
-    res.send({
-        status: 1, data
-    })
-}
-const create = async (req, res) => {
-
-    await productService.create(req.body)
+    const { data } = await productService.getProductbyId(id)
     res.send({
         status: 1,
-
+        data
     })
 }
-const updateById = async (req, res) => {
-    const { id } = req.params;
-    await productService.updateById(id, req.body)
-    res.send({
-        status: 1
-    })
-
-}
-const deleteById = async (req, res) => {
-    const { id } = req.params;
-    await productService.deletebyId(id)
+const creatProduct = async (req, res) => {
+    await productService.creatProduct(req.body)
     res.send({
         status: 1
     })
 }
+const updateProduct = async (req, res) => {
+    const { id } = req.params;
+    await productService.updateProductbyID(id, req.body)
+    res.send({
+        status: 1,
+    })
+}
+const deleteProduct = async (req, res) => {
+    const { id } = req.params
+    await productService.deleteProductbyID(id)
+    res.send({
+        status:1,
+    })
 
+}
 module.exports = {
-    getAll,
-    getById,
-    create,
-    updateById,
-    deleteById
+    getAllproduct,
+    getProductbyId,
+    creatProduct,
+    updateProduct,
+    deleteProduct,
 }

@@ -1,29 +1,59 @@
-const express = require('express');
+// để lên đầu tiên
+ const dotenv = require('dotenv')
+ dotenv.config()
 
-const { response, request } = require('express');
+const express = require('express')
+const path = require('path')
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
+const rfs = require('rotating-file-stream')
+const pagination = require('./middlewares/pagination')
 
-const pool = require('./routers/db')
+const app = express()
 
-const app = express();
-
-
-const callback = () => {
-    console.log(" running at 5000");
-}
-
-
-const categoryRoute = require('./routers/category');
-app.use('/api/v1/category', categoryRoute);
-app.get('/', (request, response) => {
-    // pool.query('select * from `user`;', (err, data) => {
-    //     if (err) response.send('error query')
-    //     console.log(data);
-    //     response.send(data)
-    // })
-    response.send("ok")
+// 1. middlewares ( bodyparser , ... )
+app.use(bodyParser.json())
+var accessLogStream = rfs.createStream('access.log', {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'log')
+})
+app.use(morgan('combined', { stream: accessLogStream }))
+app.use(pagination)
+app.use((req, res, next) => {
+  console.log('------------------------------------------------------');
+  console.log('req', req.method, req.originalUrl);
+  console.log('body: ', req.body);
+  console.log('params: ', req.params);
+  console.log('query: ',req.query);
+  next();
 })
 
-app.listen(5000, callback)
+// 2. router
+const parameterRouter = require('./routers/parameter')
+const categoryRouter = require('./routers/category')
+const productRouter = require('./routers/product')
+const orderRouter = require('./routers/order')
+// const accountRouter = require('./routers/account')
 
+app.use('/api/v1/parameter', parameterRouter);
+app.use('/api/v1/category', categoryRouter);
+app.use('/api/v1/product', productRouter);
+app.use('/api/v1/order', orderRouter);
+// app.use('/api/v1/account', accountRouter);
 
+app.get('/api/v1/test-err', (req, res, next) => {
+  next('Có lỗi 1')
+})
+app.get('/api/v1/test-err2', (req, res, next) => {
+  throw Error('Có lỗi 2')
+})
 
+// 3. error handle middleware
+const {errorHandle} = require('./middlewares/errorHandle')
+app.use(errorHandle); // dam bao server khong bi chet vi loi gi do
+
+// 4. listen
+app.listen(8080, err => {
+  if (err) console.log(err);
+  console.log("Running at port 8080");
+});

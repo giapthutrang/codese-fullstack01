@@ -1,14 +1,21 @@
 const R = require('express').Router();
 const orderController = require('../controllers/order')
 
-R.get('/', orderController.getAllOrder)
+const { tryCatch } = require('../middlewares/errorHandle')
 
-R.get('/:id', orderController.getOrderById)
+R.get('/',
+  tryCatch(orderController.getAllOrder));
 
-R.post('/', orderController.createOrder)
+R.get('/:id',
+  tryCatch(orderController.getOrderById));
 
-R.put('/:id', orderController.updateOrderById)
+R.post('/',
+  tryCatch(orderController.createOrder));
 
-R.delete('/:id', orderController.deleteOrderById)
+R.put('/:id',
+  tryCatch(orderController.updateOrder));
+  
+R.delete('/:id',
+  tryCatch(orderController.deleteOrder));
 
 module.exports = R

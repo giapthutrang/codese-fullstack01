@@ -1,15 +1,17 @@
 const R = require('express').Router();
 const categoryController = require('../controllers/category')
 
-R.get('/', categoryController.getAllCategory)
+const {tryCatch} = require('../middlewares/errorHandle')
 
-R.get('/:id', categoryController.getCategoryById)
 
-R.post('/', categoryController.createCategory)
+R.get('/', tryCatch(categoryController.getAllCategory))
 
-R.put('/:id', categoryController.updateCategoryById)
+R.get('/:id', tryCatch(categoryController.getCategoryById))
 
-R.delete('/:id', categoryController.deleteCategoryById)
+R.post('/', tryCatch(categoryController.createCategory))
 
-// vi du bay h la code mới nhất
+R.put('/:id', tryCatch(categoryController.updateCategoryById))
+
+R.delete('/:id', tryCatch(categoryController.deleteCategoryById))
+
 module.exports = R

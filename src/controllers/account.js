@@ -1,20 +1,20 @@
 const accountService = require('../services/account')
 
-const getAll = async (req, res) => {
+const getAllAccount = async (req, res) => {
     const { data, metadata } = await accountService.getAll(req.pagination)
     res.send({
         status: 1,
         metadata, data
     })
 }
-const getById = async (req, res) => {
+const getAccountById = async (req, res) => {
     const { id } = req.params;
     const data = await accountService.getById(id)
     res.send({
         status: 1, data
     })
 }
-const create = async (req, res) => {
+const createAccount = async (req, res) => {
 
     await accountService.create(req.body)
     res.send({
@@ -22,7 +22,7 @@ const create = async (req, res) => {
 
     })
 }
-const updateById = async (req, res) => {
+const updateAccountById = async (req, res) => {
     const { id } = req.params;
     await accountService.updateById(id, req.body)
     res.send({
@@ -30,7 +30,7 @@ const updateById = async (req, res) => {
     })
 
 }
-const deleteById = async (req, res) => {
+const deleteAccountById = async (req, res) => {
     const { id } = req.params;
     await accountService.deleteById(id)
     res.send({
@@ -38,9 +38,9 @@ const deleteById = async (req, res) => {
     })
 }
 module.exports = {
-    getAll,
-    getById,
-    create,
-    updateById,
-    deleteById
+    getAllAccount,
+    getAccountById,
+    createAccount,
+    updateAccountById,
+    deleteAccountById
 }

@@ -1,57 +1,71 @@
-const categoryService = require('../services/category')
-const db = require('../utils/db')
+const categoryServices = require('../services/category')
 
-
-
-const getAll = async (req, res) => {
-    const { data, metadata } = await categoryService.getAll(req.pagination)
+const getAllCategory = async (req, res) => {
+    try {
+        const {data, metadata} = await categoryServices.getAllCategory(req.pagination)
+        res.send({
+            status: 1,
+            data,
+            metadata
+        });
+    } catch (err) {
+        console.log(err)
+    }
+}
+const getCategoryById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await categoryServices.getCategorybyId(id)
+        res.send({
+            status: 1,
+            data: data
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+const createCategory = async (req, res) => {
+    try {
+        const { data } = await categoryServices.createCategory(req.body);
+        res.send(' Category new ');
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+}
+const updateCategoryById = async (req, res) => {
+    try {
+        const { data } = await categoryServices.updateCategoryById(parseInt(req.params.id), req.body)
+        res.send('Update Category');
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+}
+const deleteCategoryById = async (req, res) => {
+    try {
+        const { data } = await categoryServices.deleteCategoryById(parseInt(req.params.id));
+        res.send('delete');
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+}
+const getAllCategoryId = async (req, res)=>{
+    console.log(req.pagination);
+    const { data, metadata} = await categoryServices.getAllCategoryId()
     res.send({
         status: 1,
-        metadata, data
-
+        data,
+        metadata,
     })
 }
-const getById = async (req, res) => {
-    const { id } = req.params;
-    const data = await categoryService.getyId(id);
-
-    res.send({
-        status: 200,
-        data
-    })
-
-
-}
-const create = async (req, res) => {
-
-    await categoryService.create(req.body)
-    res.send({
-        status: 1
-    })
-}
-
-const updateById = async (req, res) => {
-    const { id } = req.params;
-    await categoryService.updateById(id, req.body)
-    res.send({
-        status: 1
-    })
-
-}
-const deleteById = async (req, res) => {
-    const { id } = req.params;
-    await categoryService.deleteById(id)
-    res.send({
-        status: 1
-    })
-}
-
 
 module.exports = {
-    getAll,
-    getById,
-    create,
-    updateById,
-    deleteById,
-
+    getAllCategory,
+    getCategoryById,
+    createCategory,
+    updateCategoryById,
+    deleteCategoryById,
+    getAllCategoryId
 }
