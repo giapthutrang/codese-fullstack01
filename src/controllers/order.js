@@ -1,6 +1,7 @@
 const orderService = require('../services/order')
 
 const getAllOrder = async (req, res) => {
+    console.log(req.query);
     const { data, metadata } = await orderService.getAllOrder(req.pagination)
     res.send({
         status: 1,

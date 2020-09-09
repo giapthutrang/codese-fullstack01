@@ -7,10 +7,10 @@ R.get('/',
   tryCatch(orderController.getAllOrder));
 
 R.get('/:id',
-  tryCatch(orderController.getOrderById));
+  tryCatch(orderController.getOrderbyId));
 
 R.post('/',
-  tryCatch(orderController.createOrder));
+  tryCatch(orderController.creatOrder));
 
 R.put('/:id',
   tryCatch(orderController.updateOrder));

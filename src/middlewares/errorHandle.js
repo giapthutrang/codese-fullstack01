@@ -10,8 +10,7 @@ const tryCatch = (f) => async (req, res, next) => {
     if (err.code < 500 && err.code > 400) {
       res.status(err.code)
       res.send(err.message)
-    } else {
-      // res.status(401) // Unauthorized 
+    } else { 
       res.status(400)  
       res.send('Bad request!')
     }
