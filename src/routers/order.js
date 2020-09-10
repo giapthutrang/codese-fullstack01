@@ -3,9 +3,9 @@ const orderController = require('../controllers/order')
 
 const { tryCatch } = require('../middlewares/errorHandle')
 
-//R.get('/',
-//  tryCatch(orderController.getAllOrder));
-R.get('/',OrderController.getAllOrder)
+R.get('/',
+  tryCatch(orderController.getAllOrder));
+//R.get('/',OrderController.getAllOrder)
 
 R.get('/:id',
   tryCatch(orderController.getOrderbyId));

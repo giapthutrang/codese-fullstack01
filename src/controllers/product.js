@@ -1,7 +1,6 @@
 const productService = require('../services/product')
 
-// alo alo hi
-// Thien no doi ten ham trong s
+
 const getAllproduct = async (req, res) => {
     const { data, metadata } = await productService.getAll(req.pagination)
     res.send({

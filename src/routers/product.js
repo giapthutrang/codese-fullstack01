@@ -7,7 +7,7 @@ const { tryCatch } = require('../middlewares/errorHandle')
 R.get('/',productController.getAllproduct);
 
 R.get('/:id',
-  tryCatch(productController.getProductById));
+  tryCatch(productController.getProductbyId));
 
 R.post('/',
   tryCatch(productController.createProduct));

@@ -14,7 +14,7 @@ const getAllOrder = async ({ limit, offset }) => {
   FROM order
   WHERE isDelete = 0;`;
   
-    const { total } = await db.queryOne(countSql);
+    const  total  = await db.queryOne(countSql);
     console.log(total);
 
     return {
