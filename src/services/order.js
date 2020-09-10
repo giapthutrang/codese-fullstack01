@@ -13,7 +13,9 @@ const getAllOrder = async ({ limit, offset }) => {
   SELECT count(orderId) as total
   FROM order
   WHERE isDelete = 0;`;
+  
     const { total } = await db.queryOne(countSql);
+    console.log(total);
 
     return {
         data,

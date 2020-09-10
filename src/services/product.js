@@ -12,8 +12,10 @@ const getAll = async ({ limit, offset }) => {
   const countSql = `
   SELECT count(productId) as total
   FROM product;`;
-  const { total } = await db.queryOne(countSql);
 
+  const { total } = await db.queryOne(countSql);
+  console.log(total);
+  
   return {
     data,
     metadata: {

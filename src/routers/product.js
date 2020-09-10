@@ -2,8 +2,9 @@ const R = require('express').Router();
 const productController = require('../controllers/product')
 const { tryCatch } = require('../middlewares/errorHandle')
 
-R.get('/',
-  tryCatch(productController.getAllProduct));
+// R.get('/',
+//   tryCatch(productController.getAllProduct));
+R.get('/',productController.getAllproduct);
 
 R.get('/:id',
   tryCatch(productController.getProductById));

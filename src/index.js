@@ -1,8 +1,9 @@
 // để lên đầu tiên
- const dotenv = require('dotenv')
- dotenv.config()
+const dotenv = require('dotenv')
+dotenv.config()
 
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -13,8 +14,9 @@ const app = express()
 
 // 1. middlewares ( bodyparser , ... )
 app.use(bodyParser.json())
+app.use(cors())
 var accessLogStream = rfs.createStream('access.log', {
-  interval: '1d', // rotate daily
+  interval: '1d', 
   path: path.join(__dirname, 'log')
 })
 app.use(morgan('combined', { stream: accessLogStream }))
@@ -51,6 +53,7 @@ app.get('/api/v1/test-err2', (req, res, next) => {
 // 3. error handle middleware
 const {errorHandle} = require('./middlewares/errorHandle')
 app.use(errorHandle); // dam bao server khong bi chet vi loi gi do
+
 
 // 4. listen
 app.listen(8080, err => {
